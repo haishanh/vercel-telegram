@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2019"],
+    "module": "commonjs",
+    "target": "ES2019",
+    "outDir": "dist",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "incremental": true,
+    "jsx": "preserve"
+  },
+  "include": ["api"]
+}

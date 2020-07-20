@@ -1,0 +1,46 @@
+{
+  "name": "tgb",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "12.x"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "api"
+    ],
+    "exec": "yarn start",
+    "ext": "ts"
+  },
+  "scripts": {
+    "start": "node --inspect=5858 --require ts-node/register ./api/app.ts",
+    "start:watch": "DEBUG=tgb:* nodemon",
+    "deploy": "vc deploy -p",
+    "build": "mkdir public > /dev/null;echo hello > public/index.html",
+    "test": "jest --forceExit",
+    "coverage": "jest --forceExit --coverage",
+    "ts:watch": "yarn tsc -w"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "fastify": "^2.14.1",
+    "fastify-plugin": "^1.6.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/debug": "^4.1.5",
+    "@types/ioredis": "^4.16.4",
+    "@types/node": "^14.0.11",
+    "@types/redis": "^2.8.22",
+    "@types/supertest": "^2.0.8",
+    "debug": "^4.1.1",
+    "fastify-basic-auth": "^0.5.0",
+    "fastify-cli": "^1.5.0",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
+}
