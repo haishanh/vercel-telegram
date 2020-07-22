@@ -23,11 +23,10 @@ export class TelegramService {
     const { baseUrl } = this;
     const url = `${baseUrl}/sendMessage`;
     try {
-      const res: AxiosResponse = await this.axios.post(url, {
+      await this.axios.post(url, {
         parse_mode: "MarkdownV2",
         ...body,
       });
-      console.log(res.data);
     } catch (e) {
       this.handleAPIError(e);
     }
