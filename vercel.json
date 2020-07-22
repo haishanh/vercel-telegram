@@ -2,20 +2,16 @@
   "version": 2,
   "env": {
     "WEBHOOK_ID_0": "@tgb_webhook_id_0",
-    "BOT_TOKEN_0": "@tgb_bot_token_0"
+    "BOT_TOKEN_0": "@tgb_bot_token_0",
+    "JWT_SECRET": "@tgb_jwt_secret"
   },
   "builds": [
     {
       "src": "api/serverless.ts",
       "use": "@vercel/node",
-      "config": {
-        "helpers": false
-      }
+      "config": { "helpers": false }
     },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build"
-    }
+    { "src": "package.json", "use": "@vercel/static-build" }
   ],
   "routes": [
     { "src": "/sync.*", "dest": "/api/serverless.ts" },

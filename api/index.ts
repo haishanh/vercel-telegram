@@ -19,7 +19,7 @@ async function decorateFastifyInstance(fastify: FastifyInstance) {
   fastify.decorate("config", config);
   fastify.decorate("telegram", new TelegramService(config.get("botToken0")));
 
-  fastify.register(fastifyJWT, { secret: "supersecret" });
+  fastify.register(fastifyJWT, { secret: config.get("jwtSecret") });
   fastify.decorate("authenticate", async function (
     request: FastifyRequest,
     reply: FastifyReply
