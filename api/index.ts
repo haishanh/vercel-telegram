@@ -13,7 +13,7 @@ import { TelegramService } from "./services";
 import * as config from "./config";
 import RouteWebhook from "./routes/webhook";
 import RoutePing from "./routes/ping";
-import RouteMessage from "./routes/message";
+import RouteProxy from "./routes/tgproxy";
 
 // "shared" decorations
 async function decorateFastifyInstance(fastify: FastifyInstance) {
@@ -49,7 +49,7 @@ export function build(opts: FastifyServerOptions = {}): FastifyInstance {
   app
     .register(fp(decorateFastifyInstance))
     .register(RouteWebhook, { prefix: "/api/webhook/v1" })
-    .register(RouteMessage, { prefix: "/api/messages/v1" })
+    .register(RouteProxy, { prefix: "/api/tgproxy/v1" })
     .register(RoutePing, { prefix: "/api/ping" });
 
   return app;
