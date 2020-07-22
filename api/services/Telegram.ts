@@ -1,9 +1,17 @@
 import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
 
+type KeyboardButton = {
+  text: string
+}
+type ReplyKeyboardMarkup = {
+  keyboard: Array<Array<KeyboardButton>>
+}
+// https://core.telegram.org/bots/api#sendmessage
 type SendMessageParams = {
   chat_id: number;
   text: string;
   parse_mode?: string;
+  reply_markup?: ReplyKeyboardMarkup
 };
 
 export class TelegramService {

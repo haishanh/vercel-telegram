@@ -60,15 +60,17 @@ const SchemaStartSyncOne = {
   response: ResponseSync,
 };
 
+type Chat = {
+  id: number;
+  first_name: string;
+  username: string;
+  type: string;
+};
+
 type PostRequest = FastifyRequest<{
   Body: {
     message: {
-      chat: {
-        id: number;
-        first_name: string;
-        username: string;
-        type: string;
-      };
+      chat: Chat;
       text: string;
     };
   };
@@ -86,18 +88,48 @@ export default async function (app: FastifyInstance) {
     }
 
     const { chat, text } = body.message;
-    const token = app.jwt.sign({ chatId: chat.id });
-
     req.log.info({ chat, text });
 
-    // XXX probably should also check if user is using the chatid command
-    // body.message.text === '/chatid'
-
-    await app.telegram.sendMessage({
-      chat_id: chat.id,
-      text: `Your notification token is \`${token}\``,
-    });
+    await handleWebookMessage(app, text, chat);
 
     return { ok: 1 };
   });
+}
+
+////////////////////
+
+async function handleWebookMessage(
+  app: FastifyInstance,
+  text: string,
+  chat: Chat
+) {
+  const t = text.trim();
+  switch (t) {
+    case "/token":
+      const token = app.jwt.sign({ chatId: chat.id });
+      await app.telegram.sendMessage({
+        chat_id: chat.id,
+        text: `\`${token}\``,
+      });
+      await app.telegram.sendMessage({
+        chat_id: chat.id,
+        text: "The above string is your notification token",
+      });
+      break;
+    default:
+      await app.telegram.sendMessage({
+        chat_id: chat.id,
+        text:
+          "😢\n\nHey, I don't konw what to do with this command\n\nPlease send me something that I know\n\n🍬🍬🍬",
+        reply_markup: {
+          keyboard: [
+            [
+              {
+                text: "/token",
+              },
+            ],
+          ],
+        },
+      });
+  }
 }
