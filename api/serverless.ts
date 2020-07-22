@@ -1,7 +1,7 @@
 import { build } from "./index";
 import * as http from "http";
 
-const app = build();
+const app = build({ logger: true });
 
 module.exports = async function (
   req: http.IncomingMessage,

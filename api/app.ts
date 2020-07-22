@@ -1,6 +1,9 @@
 import { build } from "./index";
+import dotenv from "dotenv";
 
-const app = build();
+dotenv.config();
+
+const app = build({ logger: true });
 
 const start = async () => {
   try {

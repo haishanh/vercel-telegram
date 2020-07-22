@@ -1,0 +1,3 @@
+WEBHOOK_ID_0=test_webhook_id
+BOT_TOKEN_0=test_bot_token
+JWT_SECRET=test_jwt_secret

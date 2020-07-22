@@ -2,6 +2,7 @@ import fastify, {
   FastifyInstance,
   FastifyRequest,
   FastifyReply,
+  FastifyServerOptions,
   preValidationHookHandler,
 } from "fastify";
 import fp from "fastify-plugin";
@@ -40,12 +41,10 @@ declare module "fastify" {
   }
 }
 
-export function build() {
-  const app: FastifyInstance<
-    Server,
-    IncomingMessage,
-    ServerResponse
-  > = fastify({ logger: true });
+export function build(opts: FastifyServerOptions = {}): FastifyInstance {
+  const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify(
+    opts
+  );
 
   app
     .register(fp(decorateFastifyInstance))

@@ -15,5 +15,5 @@
     "incremental": true,
     "jsx": "preserve"
   },
-  "include": ["api"]
+  "include": ["api", "tests"]
 }

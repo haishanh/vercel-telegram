@@ -1,0 +1,11 @@
+{
+  "coverageDirectory": ".coverage",
+  "moduleDirectories": ["node_modules", "<rootDir>"],
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "testEnvironment": "node",
+  "restoreMocks": true,
+  "testMatch": ["<rootDir>/tests/**/*.test.ts"],
+  "setupFiles": ["./tests/setup.ts"]
+}

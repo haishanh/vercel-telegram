@@ -85,10 +85,10 @@ export default async function (app: FastifyInstance) {
       throw new HttpException(400, "Parameters Error");
     }
 
-    // req.log.info(body, "request body");
-
-    const { chat } = body.message;
+    const { chat, text } = body.message;
     const token = app.jwt.sign({ chatId: chat.id });
+
+    req.log.info({ chat, text });
 
     // XXX probably should also check if user is using the chatid command
     // body.message.text === '/chatid'
