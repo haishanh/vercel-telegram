@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyRequest } from "fastify";
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosError } from "axios";
 
 type ProxyRequest = FastifyRequest<{
   Params: { endpoint: string };
@@ -36,6 +36,23 @@ class TgProxyService {
   async proxy(endpoint: string, payload: unknown) {
     const { baseUrl } = this;
     const url = `${baseUrl}/${endpoint}`;
-    return await this.axios.post(url, payload);
+    try {
+      const res = await this.axios.post(url, payload);
+      return res.data;
+    } catch (e) {
+      this.handleAPIError(e);
+    }
+  }
+
+  handleAPIError(e: AxiosError) {
+    if (e.response) {
+      const msg = JSON.stringify(e.response.data);
+      // I am lazy :(
+      throw new Error(`${e.response.status}:${msg}`);
+    } else if (e.request) {
+      // network error
+      throw new Error(`network:error:${e.code}`);
+    }
+    throw e;
   }
 }
