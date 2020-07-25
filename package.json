@@ -13,8 +13,8 @@
     "ext": "ts"
   },
   "scripts": {
-    "c": "next dev",
-    "s": "ts-node-dev --project ./tsconfig.node.json --inspect=5858 -- ./api/app.ts",
+    "web": "next dev",
+    "server": "ts-node-dev --project ./tsconfig.node.json --inspect=5858 -- ./api/app.ts",
     "start:watch": "DEBUG=tgb:* nodemon",
     "build": "yarn next build && yarn next export",
     "test": "jest --forceExit",
