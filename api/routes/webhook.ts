@@ -122,6 +122,7 @@ async function handleWebookMessage(
         text:
           "😢\n\nHey, I don't konw what to do with this command\n\nPlease send me something that I know\n\n🍬🍬🍬",
         reply_markup: {
+          resize_keyboard: true,
           keyboard: [
             [
               {
