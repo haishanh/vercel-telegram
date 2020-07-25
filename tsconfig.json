@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["ES2019"],
-    "module": "commonjs",
+    "module": "esnext",
     "target": "ES2019",
     "outDir": "dist",
     "allowJs": true,
@@ -12,8 +12,11 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "sourceMap": true,
-    "incremental": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "isolatedModules": true
   },
-  "include": ["api", "tests"]
+  "include": ["next-env.d.ts", "pages", "api", "tests"],
+  "exclude": ["node_modules"]
 }

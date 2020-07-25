@@ -11,11 +11,19 @@
       "use": "@vercel/node",
       "config": { "helpers": false }
     },
-    { "src": "package.json", "use": "@vercel/static-build" }
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "out" }
+    }
   ],
   "routes": [
-    { "src": "/sync.*", "dest": "/api/serverless.ts" },
     { "src": "/api.*", "dest": "/api/serverless.ts" },
-    { "src": "/.*", "dest": "/index.html" }
+    {
+      "src": "/_next/.*",
+      "headers": { "Cache-Control": "public, max-age=31536000, immutable" },
+      "continue": true
+    },
+    { "handle": "filesystem" }
   ]
 }
