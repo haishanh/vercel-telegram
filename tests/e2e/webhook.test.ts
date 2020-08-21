@@ -28,7 +28,7 @@ describe("POST /api/webhook/v1/:id", () => {
     expect(res.body).toEqual({
       statusCode: 400,
       error: "Bad Request",
-      message: "body should have required property 'message'",
+      message: "Parameters Error",
     });
   });
 

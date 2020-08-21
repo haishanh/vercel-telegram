@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyRequest } from "fastify";
 import { HttpException } from "../common/error";
 
-const ResponseSync = {
+const ResponseWebhook = {
   200: {
     type: "object",
     properties: {
@@ -12,7 +12,7 @@ const ResponseSync = {
   },
 };
 
-const SchemaStartSyncOne = {
+const _SchemaWebhook = {
   params: {
     type: "object",
     required: ["id"],
@@ -57,13 +57,14 @@ const SchemaStartSyncOne = {
       },
     },
   },
-  response: ResponseSync,
+  response: ResponseWebhook,
 };
 
 type Chat = {
   id: number;
   first_name: string;
   username: string;
+  // private, ...
   type: string;
 };
 
@@ -77,10 +78,38 @@ type PostRequest = FastifyRequest<{
   Params: { id: string };
 }>;
 
+type ImageFile = {
+  file_id: string;
+  file_size: number;
+  file_unique_id: string;
+  height: number;
+  width: number;
+};
+type _MessageWithSticker = {
+  chat: Chat;
+  // unix timestamp in seconds
+  date: number;
+  from: {
+    first_name: string;
+    id: number;
+    is_bot: boolean;
+    language_code: string;
+    username: string;
+  };
+  message_id: number;
+  sticker: ImageFile & {
+    emoji: string;
+    is_animated: boolean;
+    set_name: string;
+    thumb: ImageFile;
+  };
+};
+
 export default async function (app: FastifyInstance) {
-  app.post("/:id", { schema: SchemaStartSyncOne }, async (req: PostRequest) => {
-    // app.post("/:id", async (req: PostRequest) => {
+  // app.post("/:id", { schema: SchemaStartSyncOne }, async (req: PostRequest) => {
+  app.post("/:id", async (req: PostRequest) => {
     const { body, params } = req;
+    req.log.info(body, "request body");
     const { id } = params;
     const configedId = app.config.get("webhookId0");
     if (id !== configedId) {
@@ -88,7 +117,6 @@ export default async function (app: FastifyInstance) {
     }
 
     const { chat, text } = body.message;
-    req.log.info({ chat, text });
 
     await handleWebookMessage(app, text, chat);
 
@@ -100,10 +128,10 @@ export default async function (app: FastifyInstance) {
 
 async function handleWebookMessage(
   app: FastifyInstance,
-  text: string,
+  text: string | undefined,
   chat: Chat
 ) {
-  const t = text.trim();
+  const t = text?.trim();
   switch (t) {
     case "/token":
       const token = app.jwt.sign({ chatId: chat.id });
