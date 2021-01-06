@@ -22,7 +22,7 @@
     "ts:watch": "yarn tsc -w"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "fastify": "^3.1.1",
     "fastify-jwt": "^2.1.2",
